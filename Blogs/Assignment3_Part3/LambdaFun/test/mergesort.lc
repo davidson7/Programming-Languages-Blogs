@@ -1,0 +1,35 @@
+--mergesort.lc
+
+val id = \x. \y. x y;;
+
+val le = \x. \y. x <= y;;
+
+--le
+rec le = \x. \y. case x of {
+0 -> true,
+_ -> case y of {
+0 -> false,
+_ -> le(x-1)(y-1)}};;
+
+--makeLists
+rec makeLists = \x. case x of {
+[]-> [],
+_ -> ((head x):[]) : (makeLists (tail x))};;
+
+--merge
+rec merge = \x. \y. case x of {
+[]-> y,
+_ -> case y of {
+[]-> x,
+_ -> case ((le(head x) (head y))) of {
+false-> ((head y) : (merge x (tail y))),
+_ -> ((head x) : (merge (tail x) y))}}};;
+
+--mergesort
+rec mergesort = \x. case x of {
+[]-> [],
+_ -> (merge(head(makeLists x)) (mergesort(tail x)))};;
+
+rec member = \x. \y. case y of {
+	[] -> false,
+(a:as)-> case x == a of {true -> true, _-> member x as } } ;;

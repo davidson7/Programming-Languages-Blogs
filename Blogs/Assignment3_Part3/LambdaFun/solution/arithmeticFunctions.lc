@@ -1,0 +1,40 @@
+-- less than
+rec le = \x. \y. case x of {
+  0 -> true,
+  _ -> case y of {
+    0 -> false,
+    _ -> le(x-1)(y-1)}};;
+
+-- plus one
+val plusone = \x. x+1;;
+
+-- add
+rec add = \x. \y. case x of {
+    0 -> y,
+    _ -> plusone (add (x-1) y)} ;;
+
+-- subtract
+rec sub = \x. \y. case y of {
+  0 -> x,
+  _ -> (sub (x-1) (y-1))} ;;
+
+-- multiplication
+rec mult = \x. \y. case y of {
+  0 -> 0,
+  1 -> x,
+  _ -> (add (mult x (y-1)) (x))} ;;
+
+-- division
+rec div = \x. \y. case x < y of {
+  true -> 0,
+  _ -> case y of {
+    0 -> print "Cannot divide by zero :()",
+    1 -> x,
+    _ -> (plusone (div (sub x y) y))}};;
+
+-- modulus
+rec mod = \x. \y. case x of {
+  0 -> 0,
+  _ -> case y of {
+    0 -> print "Cannot divide by Zero",
+    _ -> (sub x (mult (div x y ) y))}};;
